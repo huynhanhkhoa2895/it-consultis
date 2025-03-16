@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import ApiResponse from "@/dto/apiResponse.dto";
 import { PokemonTypeDto } from "@/dto/pokemonType.dto";
+import { API_URL } from "@/config/constant";
 
 export async function GET() {
   try {
     const result: ApiResponse<PokemonTypeDto> = await getPokemon(
-      process.env.API_URL + `/type`,
+      API_URL + `/type`,
     );
     while (result.next) {
       const nextResult = await getPokemon(result.next);

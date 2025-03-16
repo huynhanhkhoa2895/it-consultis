@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import ApiResponse from "@/dto/apiResponse.dto";
 import { PokemonDto } from "@/dto/pokemon.dto";
+import { API_URL, PARAMS } from "@/config/constant";
 
 export async function GET(req: NextRequest) {
   try {
     const query: URLSearchParams = new URLSearchParams(req.url?.split("?")[1]);
-    const page = query.get("page") || "1";
+    const page = query.get(PARAMS.PAGE) || "1";
     const limit = 24;
     const offset = (parseInt(page) - 1) * limit;
     const result: Promise<ApiResponse<PokemonDto>> = await fetch(
-      process.env.API_URL + `/pokemon?limit=${limit}&offset=${offset}`,
+      API_URL + `/pokemon?limit=${limit}&offset=${offset}`,
     )
       .then((response) => response.json())
       .catch((e) => {
